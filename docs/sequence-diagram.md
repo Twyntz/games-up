@@ -12,10 +12,9 @@ sequenceDiagram
     Controller->>Service: getRecommendations(userId)
     Service->>ML: POST /recommendations/{userId}
     ML-->>Service: [gameId1, gameId2, gameId3]
-    Service->>RepoGame: findById([gameId1, gameId2, gameId3])
+    Service->>RepoGame: findAllById([gameId1, gameId2, gameId3])
     RepoGame-->>Service: List<Game> entities
     Service-->>Controller: List<GameDto>
     Controller-->>UI: 200 OK
     note right of UI: Affichage des recommandations
-
 ```

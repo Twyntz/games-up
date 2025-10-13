@@ -19,6 +19,7 @@ classDiagram
     class Inventory {
         - id : int
         - stock : int
+        - game : Game
     }
 
     class Order {
@@ -67,7 +68,6 @@ classDiagram
         - author : Author
         - category : Category
         - publisher : Publisher
-        - inventory : Inventory
     }
 
     Author "1" <-- "*" Game
