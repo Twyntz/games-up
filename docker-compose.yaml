@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mariadb:11.4.2
+    container_name: 'gamesup-db-mariadb'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=gamesup
+      - CHARACTER_SET_SERVER=utf8mb4
+      - COLLATION_SERVER=utf8mb4_general_ci
+    volumes:
+      - ./db/.database:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-apache
+    container_name: 'gamesup-db-interface-phpmyadmin'
+    depends_on:
+      - db
+    ports:
+      - "8000:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+  backend-spring:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: 'gamesup-backend-spring'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
