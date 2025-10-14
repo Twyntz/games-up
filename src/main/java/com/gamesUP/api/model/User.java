@@ -2,9 +2,7 @@ package com.gamesup.api.model;
 
 import com.gamesup.api.enumeration.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +10,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString(exclude = "password")
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "users")
 public class User {
     @Id
