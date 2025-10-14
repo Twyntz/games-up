@@ -1,4 +1,4 @@
-package com.gamesUP.api.model;
+package com.gamesup.api.model;
 
 import jakarta.persistence.*;
 import lombok.*;

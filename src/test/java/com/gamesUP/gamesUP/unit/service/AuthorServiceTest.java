@@ -1,8 +1,8 @@
 package com.gamesup.api.unit.service;
 
-import com.gamesup.api.dto.author.AuthorDto;
-import com.gamesup.api.dto.author.CreateAuthorDto;
-import com.gamesup.api.dto.author.UpdateAuthorDto;
+import com.gamesup.api.dto.AuthorDto;
+import com.gamesup.api.dto.CreateAuthorDto;
+import com.gamesup.api.dto.UpdateAuthorDto;
 import com.gamesup.api.exception.ResourceNotFoundException;
 import com.gamesup.api.model.Author;
 import com.gamesup.api.repository.AuthorRepository;
