@@ -12,7 +12,7 @@ import java.util.Set;
 @ToString(exclude = "password")
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "users")
+@Entity(name = "users") // Using "users" as the table name to avoid conflict with SQL reserved keywords
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +36,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
+
+    public User(Long id) {
+        this.id = id;
+    }
+
+    public boolean isAdmin() {
+        return this.role == Role.ADMIN;
+    }
 }

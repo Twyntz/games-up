@@ -4,8 +4,10 @@ import com.gamesup.api.dto.LoginInputDto;
 import com.gamesup.api.dto.LoginOutputDto;
 import com.gamesup.api.dto.RegisterInputDto;
 import com.gamesup.api.enumeration.Role;
+import com.gamesup.api.exception.HttpConflictException;
 import com.gamesup.api.model.User;
 import com.gamesup.api.repository.UserRepository;
+import com.gamesup.api.response.ApiResponse;
 import com.gamesup.api.security.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import com.gamesup.api.exception.HttpConflictException;
-import com.gamesup.api.response.ApiResponse;
 
 @RestController
 @RequestMapping("/auth")
@@ -51,7 +51,7 @@ public class AuthController {
         user.setRole(Role.CLIENT);
         userRepository.save(user);
 
-        String token = jwtService.generateToken(user.getEmail(), user.getRole().name());
+        String token = jwtService.generateToken(user.getId(), user.getEmail(), user.getRole().name());
         LoginOutputDto loginData = new LoginOutputDto(token, user.getEmail(), user.getRole().name());
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -65,7 +65,7 @@ public class AuthController {
         );
 
         User user = userRepository.findByEmail(dto.getEmail()).orElseThrow();
-        String token = jwtService.generateToken(user.getEmail(), user.getRole().name());
+        String token = jwtService.generateToken(user.getId(), user.getEmail(), user.getRole().name());
         LoginOutputDto loginData = new LoginOutputDto(token, user.getEmail(), user.getRole().name());
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "Connection réussi", loginData));

@@ -12,15 +12,16 @@ import java.util.Map;
 @Service
 public class JwtService {
     private final String SECRET = "superSecretKeyForGamesUPJWT123456789";
-    private final long EXPIRATION_TIME = 86400000; // 24h
+    private final int EXPIRATION_TIME = 86400000; // 24h
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
-    public String generateToken(String email, String role) {
+    public String generateToken(Long userId, String email, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
+        claims.put("userId", userId);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -49,5 +50,10 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public Long extractUserId(String token) {
+        Claims claims = getClaims(token);
+        return claims.get("userId", Long.class);
     }
 }

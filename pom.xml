@@ -131,6 +131,7 @@
 							<excludes>
 								<exclude>**/dto/**</exclude>
 								<exclude>**/enumeration/**</exclude>
+								<exclude>**/model/**</exclude>
 								<exclude>**/response/**</exclude>
 								<exclude>**/config/**</exclude>
 								<exclude>**/exception/**</exclude>

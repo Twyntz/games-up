@@ -51,8 +51,16 @@ class AuthControllerTest {
         RegisterInputDto dto = new RegisterInputDto("john@example.com", "password", "John Doe");
 
         when(userRepository.existsByEmail("john@example.com")).thenReturn(false);
+
         when(passwordEncoder.encode("password")).thenReturn("hashedPassword");
-        when(jwtService.generateToken("john@example.com", "CLIENT")).thenReturn("fake-jwt-token");
+
+        when(userRepository.save(any(User.class))).thenAnswer(invocation -> {
+            User u = invocation.getArgument(0);
+            u.setId(1L);
+            return u;
+        });
+
+        when(jwtService.generateToken(1L, "john@example.com", "CLIENT")).thenReturn("fake-jwt-token");
 
         mockMvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,12 +88,13 @@ class AuthControllerTest {
         LoginInputDto dto = new LoginInputDto("john@example.com", "password");
 
         User user = new User();
+        user.setId(1L);
         user.setEmail("john@example.com");
         user.setPassword("hashedPassword");
         user.setRole(Role.CLIENT);
 
         when(userRepository.findByEmail("john@example.com")).thenReturn(java.util.Optional.of(user));
-        when(jwtService.generateToken("john@example.com", "CLIENT")).thenReturn("fake-jwt-token");
+        when(jwtService.generateToken(1L, "john@example.com", "CLIENT")).thenReturn("fake-jwt-token");
 
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)

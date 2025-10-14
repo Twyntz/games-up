@@ -1,49 +1,32 @@
-package com.gamesUP.api.controller;
+package com.gamesup.api.controller;
 
-import com.gamesUP.gamesUP.model.Game;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.gamesup.api.dto.game.GameDto;
+import com.gamesup.api.response.ApiResponse;
+import com.gamesup.api.service.GameService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
+@RestController
+@RequestMapping("/games")
 public class GameController {
-    private String jdbcUrl = "jdbc:mysql://localhost:3306/gameUP";
-    private String username = "root";
-    private String password = "password";
 
-    @GetMapping
-    public List<Game> getAllJeux() {
-        List<Game> jeux = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM jeux")) {
+    private final GameService gameService;
 
-            while (rs.next()) {
-                Game game = new Game();
-                game.id = rs.getInt("id");
-                game.nom = rs.getString("nom");
-                game.auteur = rs.getString("auteur");
-                jeux.add(game);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return jeux;
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
     }
 
-    @PostMapping
-    public void ajouterJeu(@RequestBody Game game) {
-        try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO jeux (nom, auteur) VALUES (?, ?)")) {
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<GameDto>>> getAllGames() {
+        List<GameDto> games = gameService.getAllGames();
+        return ResponseEntity.ok(new ApiResponse<>(200, "Jeux récupérés avec succès", games));
+    }
 
-            stmt.setString(1, game.nom);
-            stmt.setString(2, game.auteur);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<GameDto>> getGameById(@PathVariable Long id) {
+        GameDto game = gameService.getGameById(id);
+        return ResponseEntity.ok(new ApiResponse<>(200, "Jeu récupéré avec succès", game));
     }
 }
