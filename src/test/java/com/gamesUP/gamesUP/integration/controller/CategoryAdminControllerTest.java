@@ -32,8 +32,8 @@ class CategoryAdminControllerTest {
 
     @Test
     void createCategory_shouldReturnCreated() throws Exception {
-        CreateCategoryDto dto = new CreateCategoryDto("Action");
-        CategoryDto response = new CategoryDto(1L, "Action");
+        CreateCategoryDto dto = new CreateCategoryDto("New Category");
+        CategoryDto response = new CategoryDto(1L, "New Category");
 
         Mockito.when(categoryService.createCategory(any(CreateCategoryDto.class))).thenReturn(response);
 
@@ -41,13 +41,13 @@ class CategoryAdminControllerTest {
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.name").value("Action"));
+                .andExpect(jsonPath("$.data.name").value("New Category"));
     }
 
     @Test
     void updateCategory_shouldReturnUpdated() throws Exception {
-        UpdateCategoryDto dto = new UpdateCategoryDto("Aventure");
-        CategoryDto response = new CategoryDto(1L, "Aventure");
+        UpdateCategoryDto dto = new UpdateCategoryDto("Updated Category");
+        CategoryDto response = new CategoryDto(1L, "Updated Category");
 
         Mockito.when(categoryService.updateCategory(Mockito.eq(1L), any(UpdateCategoryDto.class))).thenReturn(response);
 
@@ -55,13 +55,13 @@ class CategoryAdminControllerTest {
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.name").value("Aventure"));
+                .andExpect(jsonPath("$.data.name").value("Updated Category"));
     }
 
     @Test
     void deleteCategory_shouldReturnSuccess() throws Exception {
         mockMvc.perform(delete("/admin/categories/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Catégorie dans le void"));
+                .andExpect(jsonPath("$.message").value("Catégorie envoyé dans le void"));
     }
 }

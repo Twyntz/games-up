@@ -10,7 +10,7 @@ sequenceDiagram
     UI->>Auth: GET /api/recommendations/me + Authorization: Bearer <token>
     Auth->>Controller: authenticated userId
     Controller->>Service: getRecommendations(userId)
-    Service->>ML: POST /recommendations/{userId}
+    Service->>ML: POST /recommendations/
     ML-->>Service: [gameId1, gameId2, gameId3]
     Service->>RepoGame: findAllById([gameId1, gameId2, gameId3])
     RepoGame-->>Service: List<Game> entities

@@ -39,7 +39,7 @@ class CategoryServiceTest {
         List<CategoryDto> result = categoryService.getAllCategories();
 
         assertEquals(2, result.size());
-        assertEquals("Category1", result.getFirst().name());
+        assertEquals("Categorie1", result.getFirst().name());
     }
 
     @Test

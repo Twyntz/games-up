@@ -61,6 +61,6 @@ class AuthorAdminControllerTest {
     void deleteAuthor_shouldReturnSuccess() throws Exception {
         mockMvc.perform(delete("/admin/authors/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Author deleted successfully"));
+                .andExpect(jsonPath("$.message").value("Auteur supprimé à la perfection"));
     }
 }

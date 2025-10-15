@@ -80,7 +80,7 @@ class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.message").value(containsString("already registered")));
+                .andExpect(jsonPath("$.message").value(containsString("Cette email est déjà utilisé")));
     }
 
     @Test

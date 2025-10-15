@@ -128,16 +128,10 @@
 							<goal>report</goal>
 						</goals>
 						<configuration>
-							<excludes>
-								<exclude>**/dto/**</exclude>
-								<exclude>**/enumeration/**</exclude>
-								<exclude>**/model/**</exclude>
-								<exclude>**/response/**</exclude>
-								<exclude>**/config/**</exclude>
-								<exclude>**/exception/**</exclude>
-								<exclude>**/security/**</exclude>
-								<exclude>**/GamesUpApplication.*</exclude>
-							</excludes>
+							<includes>
+								<include>com/gamesup/api/service/**</include>
+								<include>com/gamesup/api/controller/**</include>
+							</includes>
 						</configuration>
 					</execution>
 				</executions>

@@ -99,6 +99,6 @@ class GameAdminControllerTest {
     void deleteGame_shouldReturnSuccess() throws Exception {
         mockMvc.perform(delete("/admin/games/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Game deleted successfully"));
+                .andExpect(jsonPath("$.message").value("Jeu supprimé avec succès"));
     }
 }

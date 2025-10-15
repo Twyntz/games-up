@@ -30,3 +30,18 @@ services:
       - db
     volumes:
       - ./src:/app/src
+  recommendations-api:
+    build:
+      context: ./python-api
+      dockerfile: Dockerfile
+    container_name: recommendations-api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - rec_artifacts:/mnt/data/artifacts
+    environment:
+      - PYTHONUNBUFFERED=1
+
+volumes:
+  rec_artifacts:
